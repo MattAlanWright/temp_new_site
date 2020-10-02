@@ -159,3 +159,18 @@ nav {
     font-size: 14pt;
     margin-bottom: 20px;
 }
+
+.article-body ul {
+    width: 90%;
+    margin: auto;
+}
+
+.article-body li {
+    letter-spacing: 1px;
+    line-height: 1.5em;
+    font-size: 14pt;
+}
+
+.block-eq {
+    text-align: center;
+}

@@ -6,6 +6,10 @@
     <title>A Thinking Rock</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../styles.css">
+
+    <!-- LaTeX equation support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -42,6 +46,18 @@
             </div>
 
             <p>Before we look at REINFORCE, let's dive into the policy gradient theorem, which provides the foundation of the algorithm. For the case of an episodic task, the policy gradient theorem as described in Sutton and Barto states that</p>
+
+            <div class="block-eq">
+                <div>$$\nabla J(\theta) \propto  \sum_s{\mu(s)}\sum_a{q_{\pi}(s,a)\nabla\pi(a|s,\theta)}$$</div>
+            </div>
+
+            <p>where</p>
+            <ul>
+                <li>\(J(\theta)\) is a scalar performance measure of the current policy</li>
+                <li>\(\mu(s)\) is the distribution of states \(s\) over policy \(\pi\)</li>
+                <li>\(q_{\pi}(s,a)\) is the action value function evaluated at state \(s\) and action \(a\)</li>
+                <li>\(\pi(a|s,\theta)\) is the policy evaluated at state \(s\) and action \(a\), and parameterized by \(\theta\)</li>
+            </ul>
         </div>
     </div>
 
