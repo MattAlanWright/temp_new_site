@@ -65,7 +65,7 @@ nav {
     body {
         overflow-x: hidden;
     }
-    
+
     .nav-links {
         position: absolute;
         right: 0px;
@@ -78,7 +78,7 @@ nav {
         width: 50%;
         transform: translateX(100%);
     }
-    
+
     .burger {
         display: block;
         cursor: pointer;
@@ -135,8 +135,8 @@ nav {
     color: #353535;
 }
 
-.article-contents {
-    width: 100%;
+.page-contents {
+    width: 95%;
     max-width: 800px;
     padding: 20px;
     margin: 20px auto;
@@ -150,5 +150,5 @@ nav {
 .article-body p {
     letter-spacing: 2px;
     line-height: 1.5em;
-    font-size: 15pt;
+    font-size: 14pt;
 }
