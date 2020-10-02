@@ -135,15 +135,19 @@ nav {
     color: #353535;
 }
 
+.article-contents {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    margin: 20px auto;
+}
+
 .article-title h1 {
     margin-top: 2em;
     margin-bottom: 1em;
-    margin-left: 20%;
 }
 
-.article-contents p {
-    margin-left: 20%;
-    margin-right: 20%;
+.article-body p {
     letter-spacing: 2px;
     line-height: 1.5em;
     font-size: 15pt;
