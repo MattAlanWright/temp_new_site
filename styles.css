@@ -1,0 +1,150 @@
+/*
+Color scheme:
+
+https://coolors.co/353535-3c6e71-ffffff-d9d9d9-284b63
+*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #D9D9D9;
+}
+
+nav {
+    background-color: #3c6e71;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+}
+
+.logo {
+    color: #353535;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.nav-links .current-page {
+    color: #353535;
+}
+
+.burger {
+    display: none;
+}
+
+.burger div{
+    width: 25px;
+    height: 2px;
+    background-color: #ffffff;
+    margin: 5px;
+}
+
+@media screen and (max-width:678px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    .nav-links {
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: #3c6e71;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+    }
+    
+    .burger {
+        display: block;
+        cursor: pointer;
+    }
+}
+
+.nav-active {
+    transform: translateX(0%);
+}
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.page-title {
+    color: #353535;
+}
+
+.page-title h1 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    margin-left: 10%;
+}
+
+.article-list {
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 20px;
+}
+
+.article-list a {
+    color: #3C6E71;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.article-list a:visited {
+    color: #3C6E71;
+}
+
+.article-list a:active {
+    color: #353535;
+}
+
+.article-title {
+    color: #353535;
+}
+
+.article-title h1 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    margin-left: 20%;
+}
+
+.article-contents p {
+    margin-left: 20%;
+    margin-right: 20%;
+    letter-spacing: 2px;
+    line-height: 1.5em;
+    font-size: 15pt;
+}
