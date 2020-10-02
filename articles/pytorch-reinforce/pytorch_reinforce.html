@@ -47,9 +47,7 @@
 
             <p>Before we look at REINFORCE, let's dive into the policy gradient theorem, which provides the foundation of the algorithm. For the case of an episodic task, the policy gradient theorem as described in Sutton and Barto states that</p>
 
-            <div class="block-eq">
-                <div>$$\nabla J(\theta) \propto  \sum_s{\mu(s)}\sum_a{q_{\pi}(s,a)\nabla\pi(a|s,\theta)}$$</div>
-            </div>
+            <div>$$\nabla J(\theta) \propto  \sum_s{\mu(s)}\sum_a{q_{\pi}(s,a)\nabla\pi(a|s,\theta)}$$</div>
 
             <p>where</p>
             <ul>
@@ -58,6 +56,30 @@
                 <li>\(q_{\pi}(s,a)\) is the action value function evaluated at state \(s\) and action \(a\)</li>
                 <li>\(\pi(a|s,\theta)\) is the policy evaluated at state \(s\) and action \(a\), and parameterized by \(\theta\)</li>
             </ul>
+            
+            <p>We'll explain what this theorem is saying soon, but first we should be clear on what all those pieces are. If you're reading this post, I'm going to assume you're pretty comfortable with the action value function \(q_{\pi}(s,a)\). The state distribution is self-explanatory* and we'll come back to the performance measure in a bit. For now, let's spend a bit more time with this formulation of \(\pi\) which probably looks a little different than you're used to.</p>
+            
+            <p>There are two key things to notice about the policy under this formulation. First, it's parameterized on \(\theta\). If this is your first look at REINFORCE or the policy gradient theorem, you might not be used to seeing that \(\theta\) there. While the policy gradient theorem doesn't require any specific formulation of \(\pi\), it does require that it's a parameterized function, i.e. that it uses some set of parameters \(\theta\) to calculate the final result when passed in an action \(a\) and state \(s\). We'll assume (or assert/decide/whatever) that \(\theta\) is a vector or matrix of weights used in some simple linear function or neural network, since this is almost always the case in practice. Second, notice that we're taking the gradient of this function, so it must be differentiable - one more good reason to use a neural network. To be clear, it must be differentiable with respect to the weight vector \(\theta\), with \(a\) and \(s\) fixed. This is because we ultimately want to figure out what direction we can nudge those weights in order to increase or decrease the probability of taking action \(a\) at state \(s\) in the future.</p>
+            
+            <p>Now let's take another look at the performance measure \(J(\theta)\). I'm not going to get into the nitty-gritty here, since this is much better handled in Sutton and Barto and because I'm more concerned with getting to the implementation, but the idea here is that \(J(\theta)\) is a scalar measurement of “how good” your policy is as a function of its parameter vector \(\theta\). Of course, it's not at all obvious what this function should be, and there are actually plenty of candidates depending on whether this is an episodic or continuing environment. One possible measurement that makes pretty good intuitive sense is the value of your starting state:</p>
+            
+            <p>$$J(\theta) \equiv V_{\pi_{\theta}}(s_{o})$$</p>
+            
+            <p>where \(V_{\pi_{\theta}}(s_{o})\) is a standard state value function, i.e. an estimate of the total return you expect to see starting in state \(s_{o}\) and following your policy \(\pi_{\theta}\). This should make intuitive sense, since if the value of \(s_o\) is high, then your policy is obviously a good one and whatever \(\theta\) you chose must have been good. Conversely, if it's low then your policy isn't great and you want to adjust \(\theta\) to increase the reward you expect to see. Of course, in order to do that, you need to know to know how \(\theta\) should be adjusted to increase your expected return. That's where the policy gradient theorem comes in.</p>
+            
+            <p>The policy gradient theorem gives you a tractable, useful definition of the gradient of your performance measure (or at least something proportional to the gradient, which is just as good). The proof is available elsewhere (check Sutton and Barto), but it's true for several different candidate performance measures, including \(J(\theta) \equiv V_{\pi_{\theta}}(s_{o})\). This is described pretty off-handedly in Sutton and Barto, but it's worth taking a second to let it sink in: using the formula from the beginning of this section (and a few more steps we'll describe below) we can determine an update to our weight vector \(\theta\) that will increase the performance of our agent, regardless of the environment or the task.</p>
+            
+            <p><strong>*Just in case you <em>don't</em> think it's self-explanatory, this is, roughly, the probability of being in state \(s\), or the frequency with which state \(s\) appears. We're going to make this term disappear later, so don't sweat it too much right now.</strong></p>
+            
+            <h2>Simplifying the formula</h2>
+            
+            <p>That's a really good start, but while it's mathematically tractable, the policy gradient as shown above can't be used in a real-world learning algorithm. First of all, there's that state distribution \(\mu(s)\), which we don't know. Second, the equation shown above is generalized over the state and action variables \(s\) and \(a\), but we don't want a general formula - we want an algorithm that can operate on samples of the random variables \(S_{t}\) and \(A_{t}\). What do I mean by that? The definition of the policy gradient above is based on \(q_{\pi}(s,a)\) and  \(\pi(a|s,\theta)\) over the entire domain  of \(s\) and \(a\). But we don't know what \(q_{\pi}(s,a)\) and \(\pi(a|s,\theta)\) look like over all \(s\) and \(a\). We likely don't know what they look like at all. What we *can* do, is sample over those domains. In other words, we have random variables \(S_{t}\) and \(A_{t}\) that we can sample by letting episodes play out under our policy \(\pi\) to try to get an estimate of those functions. So let's start chipping away at that formula to see if we can come up with something more useful.</p>
+            
+            <p>First, notice that</p>
+
+            <p>$$\sum_s{\mu(s)}\sum_a{q_{\pi}(s,a)\nabla\pi(a|s,\theta)}$$</p>
+            
+            <p>is just an expectation over \(s\). This is simply the definition of an expectation, bearing in mind that \(\mu(s)\) is effectively the probability distribution of \(s\). So, keeping in mind that</p>
         </div>
     </div>
 

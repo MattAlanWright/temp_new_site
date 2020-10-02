@@ -163,6 +163,7 @@ nav {
 .article-body ul {
     width: 90%;
     margin: auto;
+    margin-bottom: 20px;
 }
 
 .article-body li {
